@@ -1,0 +1,34 @@
+.inputBar {
+  width: 0;
+  height: 3px;
+  background: linear-gradient(
+    to left,
+    rgba(253, 203, 110, 1),
+    rgba(253, 203, 110, 0.5)
+  );
+  transition: all 0.2s linear;
+}
+
+.inputBox {
+  font-family: "Song Myung", serif;
+  padding: 10px;
+  border: none;
+  /*border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #01c9ca 0%, #3886ff 100%);
+  border-image-slice: 1;
+  border-radius: 7px;
+  */
+  width: 450px;
+  transition: all 0.2s linear;
+  text-align: center;
+}
+
+.inputBox:focus {
+  outline: none;
+  text-align: start;
+}
+
+.inputBox:focus + .inputBar {
+  width: 460px !important;
+}
