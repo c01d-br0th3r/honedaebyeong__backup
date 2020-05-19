@@ -6,91 +6,20 @@ import "./header.css";
 import { Modal, Button, Visibility } from "semantic-ui-react";
 import axios from "axios";
 
-const InputSapn = styled.span`
-  // needs to be relative so the :focus span is positioned correctly
-  position: relative;
-
-  // bigger font size for demo purposes
-  font-size: 1.5em;
-
-  // the border gradient
-  background: #dddddd;
-
-  // the width of the input border
-  padding: 3px;
-
-  // we want inline fields by default
-  display: inline-block;
-
-  // we want rounded corners no matter the size of the field
-  border-radius: 9999em;
-  // style of the actual input field
-  *:not(span) {
-    position: relative;
-    display: inherit;
-    border-radius: inherit;
-    margin: 0;
-    border: none;
-    outline: none;
-    padding: 0 0.325em;
-    z-index: 1; // needs to be above the :focus span
-    // summon fancy shadow styles when focussed
-    &:focus + span {
-      opacity: 1;
-      transform: scale(1);
-      width: 100%;
-    }
-  }
-
-  // we don't animate box-shadow directly as that can't be done on the GPU, only animate opacity and transform for high performance animations.
-  span {
-    width: 10%;
-    transition: all 0.3s;
-    opacity: 0; // is hidden by default
-
-    position: absolute;
-    z-index: 0; // needs to be below the field (would block input otherwise)
-    margin: 0px; // a bit bigger than .input padding, this prevents background color pixels shining through
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    pointer-events: none; // this allows the user to click through this element, as the shadow is rather wide it might overlap with other fields and we don't want to block those.
-
-    // fancy shadow styles
-    /* box-shadow: inset 0 0 0 3px #fff,
-         0 0 0 4px #fff,
-         3px -3px 30px #FFB51E, 
-            -3px 3px 30px #FE8800; */
-    background: linear-gradient(
-      to right,
-      rgba(255, 181, 30, 0.3),
-      rgba(255, 181, 30, 1)
-    );
-  }
-`;
-const InputInput = styled.input`
-  font-family: inherit;
-  line-height: inherit;
-  color: #2e3750;
-  min-width: 300px;
-`;
-
 const Fixedheader = styled.div`
   font-family: "Song Myung", serif;
   width: 100%;
   background-color: white;
-  height: 55px;
+  height: 60px;
   position: fixed;
   left: 0;
-  top: ${(props) => {
-    return props.status ? "0" : "-60px";
-  }};
+  top: ${(props) => (props.status ? "0" : "-60px")};
   z-index: 9999;
   transition: all 0.25s;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  padding-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -146,6 +75,8 @@ const Menu = styled.div`
     border-bottom: 3px solid #fdcb6e;
   }
   transition: all 0.1s linear;
+  border-bottom: 3px solid
+    ${(props) => (props.status ? "#fdcb6e" : "transparent")};
 `;
 
 const InputContainer = styled.div`
@@ -179,6 +110,8 @@ const Input = styled.input`
     margin-bottom: 20px;
   }
 `;
+
+const STLink = styled(Link)``;
 
 const FormContainer = styled.div`
   display: flex;
@@ -219,7 +152,7 @@ export default withRouter(({ location: { pathname } }) => {
   };
   return (
     <>
-      <Visibility offset={[10, 10]} onUpdate={handleUpdate}>
+      <Visibility onUpdate={handleUpdate}>
         <Container>
           <SLink to="/">
             <Logo path={LogoImage} />
@@ -240,9 +173,9 @@ export default withRouter(({ location: { pathname } }) => {
               </div>
             </InputContainer>
             <MenuContainer>
-              <Link to="/qna">
-                <Menu>QnA</Menu>
-              </Link>
+              <STLink to="/qna">
+                <Menu status={pathname === "/qna"}>QnA</Menu>
+              </STLink>
               <Menu onClick={() => setOpen(true)}>User</Menu>
             </MenuContainer>
           </Content>
@@ -256,14 +189,18 @@ export default withRouter(({ location: { pathname } }) => {
           </MenuContainer>
           <InputContainer>
             <div>
-              <InputSapn>
-                <InputInput />
-                <span></span>
-              </InputSapn>
+              <input
+                className="inputBox"
+                type="text"
+                placeholder="검색어를 입력하세용"
+              />
+              <div className="inputBar"></div>
             </div>
           </InputContainer>
           <MenuContainer>
-            <Menu>QnA</Menu>
+            <STLink to="/qna">
+              <Menu status={pathname === "/qna"}>QnA</Menu>
+            </STLink>
             <Menu onClick={() => setOpen(true)}>User</Menu>
           </MenuContainer>
         </Content>
