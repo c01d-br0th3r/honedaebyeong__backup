@@ -3,8 +3,9 @@ import { withRouter, Link } from "react-router-dom";
 import styled from "styled-components";
 import LogoImage from "../images/LogoImage.png";
 import "./header.css";
-import { Modal, Button, Visibility } from "semantic-ui-react";
+import { Modal, Visibility } from "semantic-ui-react";
 import axios from "axios";
+import LoginModal from "../components/LoginModal";
 
 const Fixedheader = styled.div`
   font-family: "Song Myung", serif;
@@ -206,34 +207,12 @@ export default withRouter(({ location: { pathname } }) => {
         </Content>
       </Fixedheader>
       <Modal
-        size="tiny"
+        size="mini"
         dimmer="blurring"
         open={open}
         onClose={() => setOpen(false)}
       >
-        <Modal.Header>로그인</Modal.Header>
-        <Modal.Content>
-          <FormContainer>
-            <Input type="text" placeholder="ID" onChange={handleIdChange} />
-            <Input
-              type="password"
-              placeholder="Password"
-              onChange={handlePwChange}
-            />
-          </FormContainer>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button negative onClick={() => setOpen(false)}>
-            No
-          </Button>
-          <Button
-            positive
-            icon="checkmark"
-            labelPosition="right"
-            content="Yes"
-            onClick={handleSubmit}
-          />
-        </Modal.Actions>
+        <LoginModal />
       </Modal>
     </>
   );

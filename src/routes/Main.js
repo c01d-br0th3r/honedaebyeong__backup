@@ -3,6 +3,7 @@ import { Placeholder } from "semantic-ui-react";
 import styled from "styled-components";
 import axios from "axios";
 import Cards from "../components/Cards";
+import CardsTwo from "../components/CardsTwo";
 
 const Container = styled.div`
   width: 1250px;
@@ -15,6 +16,13 @@ const Grid = styled.div`
   grid-template-columns: repeat(4, minmax(200px, 300px));
   justify-content: center;
   gap: 10px;
+  margin-bottom: 50px;
+`;
+
+const GridTwo = styled.div`
+  width: 1250px;
+  column-count: 4;
+  column-gap: 10px;
 `;
 
 const TitleGrid = styled.div`
@@ -66,6 +74,21 @@ const Main = () => {
             />
           ))}
         </Grid>
+      )}
+      {movies.loading ? (
+        <div>Loading...</div>
+      ) : (
+        <GridTwo>
+          {movies.movie.map((m) => (
+            <CardsTwo
+              key={m.id}
+              img={`https://image.tmdb.org/t/p/w500/${m.backdrop_path}`}
+              title={m.title}
+              score={m.vote_average}
+              desc={m.overview}
+            />
+          ))}
+        </GridTwo>
       )}
     </Container>
   );
