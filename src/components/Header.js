@@ -118,13 +118,6 @@ const Input = styled.input`
 
 const STLink = styled(Link)``;
 
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 export default withRouter(({ location: { pathname } }) => {
   //const [open, setOpen] = useState(false);
   const open = useSelector((state) => state.isOpen);
