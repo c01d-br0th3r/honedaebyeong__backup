@@ -6,6 +6,8 @@ import "./header.css";
 import { Modal, Visibility } from "semantic-ui-react";
 import axios from "axios";
 import LoginModal from "../components/LoginModal";
+import allActions from "../store/actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const Fixedheader = styled.div`
   font-family: "Song Myung", serif;
@@ -34,6 +36,7 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   font-family: "Song Myung", serif;
+  z-index: 10;
 `;
 
 const SLink = styled(Link)`
@@ -91,6 +94,7 @@ const InputContainer = styled.div`
   i {
     padding-right: 10px;
   }
+  border-bottom: 3px solid rgba(255, 234, 167, 0.7);
 `;
 
 const Input = styled.input`
@@ -122,7 +126,9 @@ const FormContainer = styled.div`
 `;
 
 export default withRouter(({ location: { pathname } }) => {
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
+  const open = useSelector((state) => state.isOpen);
+  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [calculations, setCalcul] = useState({
@@ -174,10 +180,10 @@ export default withRouter(({ location: { pathname } }) => {
               </div>
             </InputContainer>
             <MenuContainer>
-              <STLink to="/qna">
-                <Menu status={pathname === "/qna"}>QnA</Menu>
+              <STLink to="/about">
+                <Menu status={pathname === "/about"}>About</Menu>
               </STLink>
-              <Menu onClick={() => setOpen(true)}>User</Menu>
+              <Menu onClick={() => dispatch(allActions.openModal())}>User</Menu>
             </MenuContainer>
           </Content>
         </Container>
@@ -199,10 +205,10 @@ export default withRouter(({ location: { pathname } }) => {
             </div>
           </InputContainer>
           <MenuContainer>
-            <STLink to="/qna">
-              <Menu status={pathname === "/qna"}>QnA</Menu>
+            <STLink to="/about">
+              <Menu status={pathname === "/about"}>About</Menu>
             </STLink>
-            <Menu onClick={() => setOpen(true)}>User</Menu>
+            <Menu onClick={() => dispatch(allActions.openModal())}>User</Menu>
           </MenuContainer>
         </Content>
       </Fixedheader>
@@ -210,7 +216,7 @@ export default withRouter(({ location: { pathname } }) => {
         size="mini"
         dimmer="blurring"
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => dispatch(allActions.closeModal())}
       >
         <LoginModal />
       </Modal>

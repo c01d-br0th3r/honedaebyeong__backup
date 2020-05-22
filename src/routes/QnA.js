@@ -8,8 +8,15 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
-  padding: 10px 50px;
+  padding: 30px 50px;
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1) 1%,
+      rgba(255, 255, 255, 0)
+    ),
+    url("https://images.unsplash.com/photo-1494236581341-7d38b2e7d824?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1888&q=80");
+  background-position: center;
+  background-size: cover;
 `;
 
 const Header = styled.div`
@@ -32,6 +39,12 @@ const SAccordionTitle = styled(Accordion.Title)`
     align-items: center;
     font-family: "Song Myung", serif !important;
   }
+`;
+
+const ProfileContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const QnA = () => {
@@ -83,7 +96,7 @@ const QnA = () => {
         </Accordion.Content>
       </SAccordion>
       <Header>Contact</Header>
-      <div>
+      <ProfileContainer>
         <PersonalInfo
           name="이찬형"
           email="lchyung1998@gmail.com"
@@ -108,7 +121,7 @@ const QnA = () => {
           blog="velog.io/@lchyung1998"
           github="github.com/c01d-br0th3r"
         />
-      </div>
+      </ProfileContainer>
     </Container>
   );
 };

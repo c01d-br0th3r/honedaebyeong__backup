@@ -7,6 +7,9 @@
     rgba(253, 203, 110, 0.5)
   );
   transition: all 0.2s linear;
+  z-index: 10;
+  position: relative;
+  top: 3px;
 }
 
 .inputBox {
@@ -27,8 +30,10 @@
 .inputBox:focus {
   outline: none;
   text-align: start;
+  z-index: 10;
 }
 
 .inputBox:focus + .inputBar {
   width: 460px !important;
+  z-index: 10;
 }

@@ -12,9 +12,8 @@ const Container = styled.div`
 `;
 
 const Profile = styled.div`
-  width: 350px;
+  width: 300px;
   height: 100%;
-  border: 3px solid #f2f2f2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,9 +38,10 @@ const Info = styled.div`
 const Bg = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("https://images.unsplash.com/photo-1502786129293-79981df4e689?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2389&q=80");
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("https://images.unsplash.com/photo-1534162169564-158041fc3992?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=890&q=80");
   background-size: cover;
+  background-position: center;
   filter: blur(3px);
   z-index: 1;
   position: absolute;
