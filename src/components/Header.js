@@ -26,7 +26,7 @@ const Fixedheader = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 150px;
   display: flex;
   flex-direction: column;
