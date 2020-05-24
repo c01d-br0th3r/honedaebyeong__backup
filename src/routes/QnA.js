@@ -12,7 +12,7 @@ const Container = styled.div`
   background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 1%,
-      rgba(255, 255, 255, 0)
+      rgba(255, 255, 255, 0.6)
     ),
     url("https://images.unsplash.com/photo-1494236581341-7d38b2e7d824?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1888&q=80");
   background-position: center;

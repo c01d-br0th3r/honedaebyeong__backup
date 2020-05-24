@@ -119,7 +119,7 @@ const StackContainer = styled.div`
 `;
 
 const Bar = styled.div`
-  width: 100px;
+  width: 27%;
   height: 2px;
   background-color: #f2f2f2;
 `;

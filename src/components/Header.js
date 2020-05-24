@@ -69,6 +69,7 @@ const MenuContainer = styled.div`
 `;
 
 const Menu = styled.div`
+  width: 70px;
   height: 35px;
   font-size: 20px;
   padding: 7px 10px 10px 10px;
