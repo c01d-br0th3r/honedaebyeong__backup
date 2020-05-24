@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import styled from "styled-components";
 import LogoImage from "../images/LogoImage.png";
@@ -26,7 +26,7 @@ const Fixedheader = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 150px;
   display: flex;
   flex-direction: column;
@@ -119,6 +119,10 @@ const Input = styled.input`
 
 const STLink = styled(Link)``;
 
+const SVisibility = styled(Visibility)`
+  width: 100%;
+`;
+
 export default withRouter(({ location: { pathname } }) => {
   //const [open, setOpen] = useState(false);
   const open = useSelector((state) => state.isOpen);
@@ -151,9 +155,10 @@ export default withRouter(({ location: { pathname } }) => {
     console.log(tokens);
     window.localStorage.setItem("access_token", tokens.access.token);
   };
+
   return (
     <>
-      <Visibility onUpdate={handleUpdate}>
+      <SVisibility className="Vcontainer" onUpdate={handleUpdate}>
         <Container>
           <SLink to="/">
             <Logo path={LogoImage} />
@@ -181,7 +186,7 @@ export default withRouter(({ location: { pathname } }) => {
             </MenuContainer>
           </Content>
         </Container>
-      </Visibility>
+      </SVisibility>
       <Fixedheader status={calculations.bottomPassed}>
         <Content>
           <MenuContainer>

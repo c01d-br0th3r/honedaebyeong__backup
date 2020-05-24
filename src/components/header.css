@@ -37,3 +37,9 @@
   width: 460px !important;
   z-index: 10;
 }
+
+@media screen and (max-width: 1250px) {
+  .Vcontainer {
+    width: 1250px !important;
+  }
+}
