@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input, Checkbox, Button } from "semantic-ui-react";
 import styled from "styled-components";
 import axios from "axios";
+import Header from "../components/Header";
 
 const Wrap = styled.div`
   clear: both;
@@ -97,62 +98,65 @@ const RegistForm = () => {
     console.log(regi);
   };
   return (
-    <Wrap>
-      <Title>홍대병 회원가입</Title>
+    <>
+      <Header />
+      <Wrap>
+        <Title>홍대병 회원가입</Title>
 
-      <InputA
-        placeholder="이메일"
-        fluid
-        id="email"
-        value={email}
-        onChange={HandleChange}
-      ></InputA>
-      <InputB
-        placeholder="이름"
-        id="name"
-        value={name}
-        onChange={HandleChange}
-      ></InputB>
-      <InputC
-        placeholder="닉네임"
-        id="nickname"
-        value={nickname}
-        onChange={HandleChange}
-      ></InputC>
-      <InputA
-        placeholder="비밀번호"
-        fluid
-        id="password"
-        value={password}
-        onChange={HandleChange}
-        type="password"
-      ></InputA>
-      <InputA
-        placeholder="비밀번호 확인"
-        fluid
-        id="passwordChk"
-        value={passwordChk}
-        onChange={HandleChange}
-        type="password"
-      ></InputA>
-      <UserAgreement>
-        <Checkua onClick={() => setUa(!ua)}>
-          <Checkbox label="개인정보 수집 및 이용 동의" checked={ua} />
-        </Checkua>
-        <Contentua src="https://member.nexon.com/html/privacy/privacy_1.html"></Contentua>
-      </UserAgreement>
-      <UserAgreement>
-        <Checkua onClick={() => setEmp(!emp)}>
-          <Checkbox
-            label="(선택) 이벤트 등 프로모션 안내 메일 수신에 동의합니다."
-            checked={emp}
-          />
-        </Checkua>
-      </UserAgreement>
-      <Button color="orange" fluid onClick={HandleSubmit}>
-        홍대병 가입
-      </Button>
-    </Wrap>
+        <InputA
+          placeholder="이메일"
+          fluid
+          id="email"
+          value={email}
+          onChange={HandleChange}
+        ></InputA>
+        <InputB
+          placeholder="이름"
+          id="name"
+          value={name}
+          onChange={HandleChange}
+        ></InputB>
+        <InputC
+          placeholder="닉네임"
+          id="nickname"
+          value={nickname}
+          onChange={HandleChange}
+        ></InputC>
+        <InputA
+          placeholder="비밀번호"
+          fluid
+          id="password"
+          value={password}
+          onChange={HandleChange}
+          type="password"
+        ></InputA>
+        <InputA
+          placeholder="비밀번호 확인"
+          fluid
+          id="passwordChk"
+          value={passwordChk}
+          onChange={HandleChange}
+          type="password"
+        ></InputA>
+        <UserAgreement>
+          <Checkua onClick={() => setUa(!ua)}>
+            <Checkbox label="개인정보 수집 및 이용 동의" checked={ua} />
+          </Checkua>
+          <Contentua src="https://member.nexon.com/html/privacy/privacy_1.html"></Contentua>
+        </UserAgreement>
+        <UserAgreement>
+          <Checkua onClick={() => setEmp(!emp)}>
+            <Checkbox
+              label="(선택) 이벤트 등 프로모션 안내 메일 수신에 동의합니다."
+              checked={emp}
+            />
+          </Checkua>
+        </UserAgreement>
+        <Button color="orange" fluid onClick={HandleSubmit}>
+          홍대병 가입
+        </Button>
+      </Wrap>
+    </>
   );
 };
 

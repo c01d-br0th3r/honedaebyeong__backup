@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import Cards from "../components/Cards";
 import CardsTwo from "../components/CardsTwo";
+import Header from "../components/Header";
 
 const Container = styled.div`
   width: 1250px;
@@ -30,8 +31,8 @@ const TitleGrid = styled.div`
   grid-column: span 2;
   background-image: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.6)
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1)
     ),
     url("https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2680&q=80");
   background-position: center;
@@ -58,39 +59,42 @@ const Main = () => {
     handleMovies();
   }, []);
   return (
-    <Container>
-      {movies.loading ? (
-        <div>Loading...</div>
-      ) : (
-        <Grid>
-          <TitleGrid></TitleGrid>
-          {movies.movie.map((m) => (
-            <Cards
-              key={m.id}
-              img={`https://image.tmdb.org/t/p/w500/${m.backdrop_path}`}
-              title={m.title}
-              score={m.vote_average}
-              desc={m.overview}
-            />
-          ))}
-        </Grid>
-      )}
-      {movies.loading ? (
-        <div>Loading...</div>
-      ) : (
-        <GridTwo>
-          {movies.movie.map((m) => (
-            <CardsTwo
-              key={m.id}
-              img={`https://image.tmdb.org/t/p/w500/${m.backdrop_path}`}
-              title={m.title}
-              score={m.vote_average}
-              desc={m.overview}
-            />
-          ))}
-        </GridTwo>
-      )}
-    </Container>
+    <>
+      <Header />
+      <Container>
+        {movies.loading ? (
+          <div>Loading...</div>
+        ) : (
+          <Grid>
+            <TitleGrid></TitleGrid>
+            {movies.movie.map((m) => (
+              <Cards
+                key={m.id}
+                img={`https://image.tmdb.org/t/p/w500/${m.backdrop_path}`}
+                title={m.title}
+                score={m.vote_average}
+                desc={m.overview}
+              />
+            ))}
+          </Grid>
+        )}
+        {movies.loading ? (
+          <div>Loading...</div>
+        ) : (
+          <GridTwo>
+            {movies.movie.map((m) => (
+              <CardsTwo
+                key={m.id}
+                img={`https://image.tmdb.org/t/p/w500/${m.backdrop_path}`}
+                title={m.title}
+                score={m.vote_average}
+                desc={m.overview}
+              />
+            ))}
+          </GridTwo>
+        )}
+      </Container>
+    </>
   );
 };
 

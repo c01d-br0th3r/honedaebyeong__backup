@@ -79,7 +79,7 @@ const Menu = styled.div`
   &:hover {
     border-bottom: 3px solid #fdcb6e;
   }
-  transition: all 0.1s linear;
+  transition: all 0.2s linear;
   border-bottom: 3px solid
     ${(props) => (props.status ? "#fdcb6e" : "transparent")};
 `;

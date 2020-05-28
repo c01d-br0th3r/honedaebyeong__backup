@@ -141,7 +141,7 @@ const LoginModal = () => {
       const info = { email: id, password: pw };
       try {
         const resp = await axios.post(
-          "http://18.218.137.70/api/auth/login",
+          "http://hongsick.com/api/auth/login",
           info
         );
         setLoading(false);

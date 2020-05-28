@@ -6,7 +6,7 @@
     rgba(253, 203, 110, 1),
     rgba(253, 203, 110, 0.5)
   );
-  transition: all 0.2s linear;
+  transition: all 0.4s ease-in-out;
   z-index: 10;
   position: relative;
   top: 3px;
