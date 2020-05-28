@@ -1,13 +1,5 @@
-const openModal = () => {
-  return {
-    type: "OPEN_MODAL",
-  };
-};
+import modalActions from "./modalActions";
 
-const closeModal = () => {
-  return {
-    type: "CLOSE_MODAL",
-  };
-};
+const allActions = { modalActions };
 
-export default { openModal, closeModal };
+export default allActions;

@@ -182,7 +182,11 @@ export default withRouter(({ location: { pathname } }) => {
               <STLink to="/about">
                 <Menu status={pathname === "/about"}>About</Menu>
               </STLink>
-              <Menu onClick={() => dispatch(allActions.openModal())}>User</Menu>
+              <Menu
+                onClick={() => dispatch(allActions.modalActions.openModal())}
+              >
+                User
+              </Menu>
             </MenuContainer>
           </Content>
         </Container>
@@ -207,7 +211,9 @@ export default withRouter(({ location: { pathname } }) => {
             <STLink to="/about">
               <Menu status={pathname === "/about"}>About</Menu>
             </STLink>
-            <Menu onClick={() => dispatch(allActions.openModal())}>User</Menu>
+            <Menu onClick={() => dispatch(allActions.modalActions.openModal())}>
+              User
+            </Menu>
           </MenuContainer>
         </Content>
       </Fixedheader>
@@ -215,10 +221,16 @@ export default withRouter(({ location: { pathname } }) => {
         size="mini"
         dimmer="blurring"
         open={open}
-        onClose={() => dispatch(allActions.closeModal())}
+        onClose={() => dispatch(allActions.modalActions.closeModal())}
       >
         <LoginModal />
       </Modal>
     </>
   );
 });
+
+/*
+외부광선 오바임
+그라데이션 위에 흰 폰트를 얹어라!!
+가우시안 블러 150 이상으로 올리면 개멋짐
+*/

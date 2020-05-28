@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Accordion, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import PersonalInfo from "../components/PersonalInfo";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +50,16 @@ const ProfileContainer = styled.div`
 
 const QnA = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [data, setData] = useState({ loading: true, data: [] });
+
+  const handleData = async () => {
+    const res = await axios.get("http://18.221.250.120/api/post");
+    console.log(res);
+  };
+
+  useEffect(() => {
+    handleData();
+  }, []);
 
   const handleClick = (event, titleProps) => {
     const index = titleProps.index;

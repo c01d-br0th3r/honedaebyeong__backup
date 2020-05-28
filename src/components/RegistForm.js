@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, Checkbox, Button } from "semantic-ui-react";
 import styled from "styled-components";
+import axios from "axios";
 
 const Wrap = styled.div`
   clear: both;
@@ -77,7 +78,7 @@ const RegistForm = () => {
       console.log("ERROR");
     }
   };
-  const HandleSubmit = () => {
+  const HandleSubmit = async () => {
     if (ua === false) {
       alert("이용약관에 대한 내용 확인 후 동의해주세요.");
       return;
@@ -86,11 +87,14 @@ const RegistForm = () => {
       email: email,
       name: name,
       nickname: nickname,
-      pw: password,
-      pwc: passwordChk,
-      emailpromotion: emp,
+      password: password,
+      passwordConfirmation: passwordChk,
     };
-    console.log(data);
+    const regi = await axios.post(
+      "http://18.218.137.70/api/auth/register",
+      data
+    );
+    console.log(regi);
   };
   return (
     <Wrap>
@@ -121,6 +125,7 @@ const RegistForm = () => {
         id="password"
         value={password}
         onChange={HandleChange}
+        type="password"
       ></InputA>
       <InputA
         placeholder="비밀번호 확인"
@@ -128,6 +133,7 @@ const RegistForm = () => {
         id="passwordChk"
         value={passwordChk}
         onChange={HandleChange}
+        type="password"
       ></InputA>
       <UserAgreement>
         <Checkua onClick={() => setUa(!ua)}>
