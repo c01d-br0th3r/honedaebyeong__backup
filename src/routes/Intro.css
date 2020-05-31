@@ -1,0 +1,100 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+}
+
+section {
+  border: 5px solid red !important;
+}
+
+#wrapper {
+  overflow-x: hidden;
+  color: #fff;
+  letter-spacing: -0.05em;
+  background-color: rgb(29, 29, 31);
+}
+
+p {
+  line-height: 1.6;
+}
+
+#scroll-section-0 h1 {
+  font-size: 4rem;
+  text-align: center;
+  font-weight: 900;
+  position: relative;
+  z-index: 20;
+  top: -10vh;
+}
+
+.scroll-section {
+  padding-top: 50vh;
+}
+
+.scroll-section .sticky-elem {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+
+.sticky-elem-canvas {
+  height: 100%;
+  top: 0;
+}
+
+.sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.main-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3em;
+  font-size: 2.5rem;
+  opacity: 0;
+  top: 35vh;
+}
+
+.main-message p {
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+}
+
+#show-scene-0 #scroll-section-0 .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem {
+  display: block;
+}
+
+.description {
+  font-size: 1.5rem;
+  color: #888;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.description strong {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #f2f2f2;
+  float: left;
+}
+
+@media (min-width: 1024px) {
+  #scroll-section-0 h1 {
+    font-size: 9vw;
+  }
+  .main-message {
+    font-size: 4vw;
+  }
+  .description {
+    font-size: 2rem;
+  }
+  .description strong {
+    font-size: 6rem;
+  }
+}
