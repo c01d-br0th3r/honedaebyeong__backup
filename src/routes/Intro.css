@@ -3,10 +3,6 @@
   font-size: 14px;
 }
 
-section {
-  border: 5px solid red !important;
-}
-
 #wrapper {
   overflow-x: hidden;
   color: #fff;
@@ -25,6 +21,21 @@ p {
   position: relative;
   z-index: 20;
   top: -10vh;
+  transition: all 0.3s ease-in-out;
+}
+
+#scroll-section-0 h1:hover {
+  color: #cd6133;
+}
+
+.explain {
+  width: 100%;
+  text-align: center;
+  font-size: 2vw;
+  letter-spacing: 10px;
+  color: #c2c2c2;
+  position: relative;
+  z-index: 20;
 }
 
 .scroll-section {
@@ -70,6 +81,10 @@ p {
   display: block;
 }
 
+#show-scene-1 #scroll-section-1 {
+  opacity: 1;
+}
+
 .description {
   font-size: 1.5rem;
   color: #888;
@@ -81,12 +96,12 @@ p {
   font-size: 6rem;
   font-weight: 700;
   color: #f2f2f2;
-  float: left;
+  display: block;
 }
 
 @media (min-width: 1024px) {
   #scroll-section-0 h1 {
-    font-size: 9vw;
+    font-size: 12vw;
   }
   .main-message {
     font-size: 4vw;
@@ -97,4 +112,8 @@ p {
   .description strong {
     font-size: 6rem;
   }
+}
+
+#scroll-section-1 {
+  opacity: 0;
 }

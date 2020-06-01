@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Contact from "../components/Contact";
 import "./Intro.css";
 
 const Intro = () => {
@@ -23,9 +25,10 @@ const Intro = () => {
           videoImages: [],
         },
         values: {
-          videoImageCount: 401,
-          imageSequence: [0, 400],
-          canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
+          videoImageCount: 380,
+          imageSequence: [0, 379],
+          canvas_opacity_in: [0, 1, { start: 0.07, end: 0.1 }],
+          canvas_opacity_out: [1, 0, { start: 0.9, end: 1 }],
           messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
           messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
           messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -43,12 +46,14 @@ const Intro = () => {
       },
       {
         type: "normal",
-        heightNum: 4,
+        heightNum: 2,
         scrollHeight: 0,
         objs: {
           container: document.querySelector("#scroll-section-1"),
         },
-        values: {},
+        values: {
+          container_opacity_in: [0, 1, { start: 0, end: 0.2 }],
+        },
       },
     ];
 
@@ -57,19 +62,19 @@ const Intro = () => {
       for (let i = 0; i < 10; i++) {
         imgElem = new Image();
         //imgElem.src = `../images/LogoImage.png`;
-        imgElem.src = `/images/images_0000${i}.jpg`;
+        imgElem.src = `/imagesSecond/street_0000${i}.jpg`;
         sceneInfo[0].objs.videoImages.push(imgElem);
       }
       for (let i = 10; i < 100; i++) {
         imgElem = new Image();
         //imgElem.src = `../images/LogoImage.png`;
-        imgElem.src = `/images/images_000${i}.jpg`;
+        imgElem.src = `/imagesSecond/street_000${i}.jpg`;
         sceneInfo[0].objs.videoImages.push(imgElem);
       }
-      for (let i = 100; i <= 400; i++) {
+      for (let i = 100; i < 380; i++) {
         imgElem = new Image();
         //imgElem.src = `../images/LogoImage.png`;
-        imgElem.src = `/images/images_00${i}.jpg`;
+        imgElem.src = `/imagesSecond/street_00${i}.jpg`;
         sceneInfo[0].objs.videoImages.push(imgElem);
       }
     }
@@ -112,12 +117,18 @@ const Intro = () => {
           let sequence = Math.round(
             calcValues(values.imageSequence, currentYOffset)
           );
-          console.log(objs.videoImages[sequence]);
           objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-          objs.canvas.style.opacity = calcValues(
-            values.canvas_opacity,
-            currentYOffset
-          );
+          if (scrollRatio <= 0.5) {
+            objs.canvas.style.opacity = calcValues(
+              values.canvas_opacity_in,
+              currentYOffset
+            );
+          } else {
+            objs.canvas.style.opacity = calcValues(
+              values.canvas_opacity_out,
+              currentYOffset
+            );
+          }
           let messageA_translateY_in = calcValues(
             values.messageA_translateY_in,
             currentYOffset
@@ -184,6 +195,10 @@ const Intro = () => {
           }
           break;
         case 1:
+          objs.container.style.opacity = calcValues(
+            values.container_opacity_in,
+            currentYOffset
+          );
           break;
       }
     }
@@ -214,13 +229,13 @@ const Intro = () => {
 
     function setLayout() {
       for (let i = 0; i < sceneInfo.length; i++) {
-        /*if (sceneInfo[i].type === "sticky") {
+        if (sceneInfo[i].type === "sticky") {
           sceneInfo[i].scrollHeight =
             window.innerHeight * sceneInfo[i].heightNum;
         } else if (sceneInfo[i].type === "normal") {
           sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight;
-        }*/
-        sceneInfo[i].scrollHeight = window.innerHeight * sceneInfo[i].heightNum;
+        }
+        //sceneInfo[i].scrollHeight = window.innerHeight * sceneInfo[i].heightNum;
         sceneInfo[
           i
         ].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
@@ -229,14 +244,22 @@ const Intro = () => {
       let totalScrollHeight = 0;
       for (let i = 0; i < sceneInfo.length; i++) {
         totalScrollHeight += sceneInfo[i].scrollHeight;
-        if (yOffset > totalScrollHeight) {
+        if (yOffset <= totalScrollHeight) {
           currentScene = i;
           break;
         }
       }
       document.body.setAttribute("id", `show-scene-${currentScene}`);
-      const heightRatio = window.innerHeight / 720;
+      const heightRatio = window.innerHeight / 1080;
       sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
+
+      if (currentScene === 0) {
+        sceneInfo[0].objs.context.drawImage(
+          sceneInfo[0].objs.videoImages[0],
+          0,
+          0
+        );
+      }
     }
     setLayout();
     window.addEventListener("resize", setLayout);
@@ -244,16 +267,25 @@ const Intro = () => {
       yOffset = window.pageYOffset;
       scrollLoop();
     });
+
+    return { setLayout, scrollLoop };
   }
   useEffect(() => {
-    init();
+    const returnInit = init();
+    return () => {
+      window.removeEventListener("resize", returnInit.setLayout);
+      window.removeEventListener("scroll", returnInit.scrollLoop);
+    };
   }, []);
   return (
     <div id="wrapper">
       <section className="scroll-section" id="scroll-section-0">
-        <h1>홍대병</h1>
+        <Link to="/main">
+          <h1>#홍대병</h1>
+        </Link>
+        <div className="explain">2020 Sejong Univ. Web Programming Project</div>
         <div className="sticky-elem sticky-elem-canvas">
-          <canvas id="video-canvas-0" width="1280" height="720"></canvas>
+          <canvas id="video-canvas-0" width="1920" height="1080"></canvas>
         </div>
         <div className="sticky-elem main-message a">
           <p>
@@ -278,14 +310,7 @@ const Intro = () => {
         </div>
       </section>
       <section className="scroll-section" id="scroll-section-1">
-        <p className="description">
-          <strong>보통 스크롤 영역</strong> Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Nostrum, obcaecati ab natus iure
-          voluptas mollitia, ex dolorem, delectus doloribus ratione illum quae
-          officia dolore laborum voluptate. Quis accusantium ratione quisquam
-          voluptatem sunt veniam quibusdam, vel nihil facilis distinctio vitae
-          quos voluptas aliquid eveniet modi tenetur rerum voluptate sint
-        </p>
+        <Contact />
       </section>
     </div>
   );
