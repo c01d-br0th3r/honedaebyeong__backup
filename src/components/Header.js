@@ -135,6 +135,28 @@ export default withRouter(({ location: { pathname } }) => {
     topVisible: false,
     bottomVisible: false,
   });
+  const loginInfo = useSelector((state) => state.loginInfo);
+
+  const handleIsUser = async () => {
+    const userId = window.localStorage.getItem("id");
+    if (userId !== null) {
+      const {
+        data: { user },
+      } = await axios.get(`http://www.hongsick.com/api/auth/me/${userId}`);
+      dispatch(allActions.loginActions.loginUserSuccess(user));
+    }
+  };
+
+  useEffect(() => {
+    handleIsUser();
+  }, []);
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("access_token");
+    window.localStorage.removeItem("refresh_token");
+    window.localStorage.removeItem("id");
+    dispatch(allActions.loginActions.logOutUser());
+  };
 
   const handleIdChange = (event) => {
     setId(event.target.value);
@@ -146,7 +168,7 @@ export default withRouter(({ location: { pathname } }) => {
     setCalcul(calculations);
   };
 
-  const handleSubmit = async () => {
+  /*const handleSubmit = async () => {
     console.log(id, pw);
     const info = { email: id, password: pw };
     const {
@@ -154,8 +176,7 @@ export default withRouter(({ location: { pathname } }) => {
     } = await axios.post("http://192.168.0.20:3030/auth/login", info);
     console.log(tokens);
     window.localStorage.setItem("access_token", tokens.access.token);
-  };
-
+  };*/
   return (
     <>
       <SVisibility className="Vcontainer" onUpdate={handleUpdate}>
@@ -182,11 +203,15 @@ export default withRouter(({ location: { pathname } }) => {
               <STLink to="/about">
                 <Menu status={pathname === "/about"}>About</Menu>
               </STLink>
-              <Menu
-                onClick={() => dispatch(allActions.modalActions.openModal())}
-              >
-                User
-              </Menu>
+              {loginInfo ? (
+                <Menu onClick={handleLogout}>{loginInfo.profile.nickname}</Menu>
+              ) : (
+                <Menu
+                  onClick={() => dispatch(allActions.modalActions.openModal())}
+                >
+                  User
+                </Menu>
+              )}
             </MenuContainer>
           </Content>
         </Container>
@@ -211,9 +236,15 @@ export default withRouter(({ location: { pathname } }) => {
             <STLink to="/about">
               <Menu status={pathname === "/about"}>About</Menu>
             </STLink>
-            <Menu onClick={() => dispatch(allActions.modalActions.openModal())}>
-              User
-            </Menu>
+            {loginInfo ? (
+              <Menu onClick={handleLogout}>{loginInfo.profile.nickname}</Menu>
+            ) : (
+              <Menu
+                onClick={() => dispatch(allActions.modalActions.openModal())}
+              >
+                User
+              </Menu>
+            )}
           </MenuContainer>
         </Content>
       </Fixedheader>

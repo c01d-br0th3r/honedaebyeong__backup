@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import allActinos from "../store/actions";
 import axios from "axios";
+import allActions from "../store/actions";
 
 const Container = styled.div`
   display: flex;
@@ -121,6 +122,7 @@ const LoginModal = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState("");
+  const loginInfo = useSelector((state) => state.loginInfo);
   const handleIdChange = (e) => {
     setId(e.target.value);
   };
@@ -141,7 +143,7 @@ const LoginModal = () => {
       const info = { email: id, password: pw };
       try {
         const resp = await axios.post(
-          "http://hongsick.com/api/auth/login",
+          "http://www.hongsick.com/api/auth/login",
           info
         );
         setLoading(false);
@@ -160,8 +162,12 @@ const LoginModal = () => {
     if (data !== null) {
       const access = data.data.tokens.access.token;
       const refresh = data.data.tokens.refresh.token;
+      const user = data.data.user;
+      const id = user.id;
       window.localStorage.setItem("access_token", access);
       window.localStorage.setItem("refresh_token", refresh);
+      window.localStorage.setItem("id", id);
+      dispatch(allActions.loginActions.loginUserSuccess(user));
     }
   }, [data]);
   return (

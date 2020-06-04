@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Pulse from "react-reveal/Pulse";
 import Contact from "../components/Contact";
 import "./Intro.css";
 
@@ -17,6 +18,7 @@ const Intro = () => {
         scrollHeight: 0,
         objs: {
           container: document.querySelector("#scroll-section-0"),
+          title: document.querySelector(".title"),
           messageA: document.querySelector("#scroll-section-0 .main-message.a"),
           messageB: document.querySelector("#scroll-section-0 .main-message.b"),
           messageC: document.querySelector("#scroll-section-0 .main-message.c"),
@@ -27,6 +29,8 @@ const Intro = () => {
         values: {
           videoImageCount: 380,
           imageSequence: [0, 379],
+          title_up: [0, -230, { start: 0, end: 0.1 }],
+          title_end: [-230, -400, { start: 0.9, end: 1 }],
           canvas_opacity_in: [0, 1, { start: 0.07, end: 0.1 }],
           canvas_opacity_out: [1, 0, { start: 0.9, end: 1 }],
           messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
@@ -114,10 +118,17 @@ const Intro = () => {
       const scrollRatio = currentYOffset / scrollHeight;
       switch (currentScene) {
         case 0:
+          if (scrollRatio <= 0.5) {
+            let title_translateY = calcValues(values.title_up, currentYOffset);
+            objs.title.style.transform = `translateY(${title_translateY}%)`;
+          } else {
+            let title_translateY = calcValues(values.title_end, currentYOffset);
+            objs.title.style.transform = `translateY(${title_translateY}%)`;
+          }
           let sequence = Math.round(
             calcValues(values.imageSequence, currentYOffset)
           );
-          objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+          //objs.context.drawImage(objs.videoImages[sequence], 0, 0);
           if (scrollRatio <= 0.5) {
             objs.canvas.style.opacity = calcValues(
               values.canvas_opacity_in,
@@ -253,13 +264,13 @@ const Intro = () => {
       const heightRatio = window.innerHeight / 1080;
       sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
 
-      if (currentScene === 0) {
+      /*if (currentScene === 0) {
         sceneInfo[0].objs.context.drawImage(
           sceneInfo[0].objs.videoImages[0],
           0,
           0
         );
-      }
+      }*/
     }
     setLayout();
     window.addEventListener("resize", setLayout);
@@ -279,11 +290,17 @@ const Intro = () => {
   }, []);
   return (
     <div id="wrapper">
+      <Pulse forever>
+        <div className="scroll-down">
+          <i className="fas fa-angle-double-down"></i>Scroll Down
+        </div>
+      </Pulse>
       <section className="scroll-section" id="scroll-section-0">
-        <Link to="/main">
-          <h1>#홍대병</h1>
-        </Link>
-        <div className="explain">2020 Sejong Univ. Web Programming Project</div>
+        <div className="title">
+          <Link to="/main">
+            <h1>#홍대병</h1>
+          </Link>
+        </div>
         <div className="sticky-elem sticky-elem-canvas">
           <canvas id="video-canvas-0" width="1920" height="1080"></canvas>
         </div>

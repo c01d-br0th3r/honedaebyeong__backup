@@ -110,7 +110,7 @@ const RegistForm = () => {
     };
     try {
       const regi = await axios.post(
-        "http://hongsick.com/api/auth/register",
+        "http://www.hongsick.com/api/auth/register",
         data
       );
       console.log(regi);
