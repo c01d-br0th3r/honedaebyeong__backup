@@ -8,6 +8,7 @@ import axios from "axios";
 import LoginModal from "../components/LoginModal";
 import allActions from "../store/actions";
 import { useSelector, useDispatch } from "react-redux";
+import UserDropdown from "./UserDropdown";
 
 const Fixedheader = styled.div`
   font-family: "Song Myung", serif;
@@ -139,10 +140,15 @@ export default withRouter(({ location: { pathname } }) => {
 
   const handleIsUser = async () => {
     const userId = window.localStorage.getItem("id");
+    const access = window.localStorage.getItem("access_token");
     if (userId !== null) {
       const {
         data: { user },
-      } = await axios.get(`http://www.hongsick.com/api/auth/me/${userId}`);
+      } = await axios.get(`http://www.hongsick.com/api/auth/me/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      });
       dispatch(allActions.loginActions.loginUserSuccess(user));
     }
   };
@@ -150,13 +156,6 @@ export default withRouter(({ location: { pathname } }) => {
   useEffect(() => {
     handleIsUser();
   }, []);
-
-  const handleLogout = () => {
-    window.localStorage.removeItem("access_token");
-    window.localStorage.removeItem("refresh_token");
-    window.localStorage.removeItem("id");
-    dispatch(allActions.loginActions.logOutUser());
-  };
 
   const handleIdChange = (event) => {
     setId(event.target.value);
@@ -168,15 +167,54 @@ export default withRouter(({ location: { pathname } }) => {
     setCalcul(calculations);
   };
 
-  /*const handleSubmit = async () => {
-    console.log(id, pw);
-    const info = { email: id, password: pw };
-    const {
-      data: { tokens },
-    } = await axios.post("http://192.168.0.20:3030/auth/login", info);
-    console.log(tokens);
-    window.localStorage.setItem("access_token", tokens.access.token);
-  };*/
+  const handleValideToken = async () => {
+    const userId = window.localStorage.getItem("id");
+    const access = window.localStorage.getItem("access_token");
+    if (userId === null || access === null) return;
+    try {
+      const resp = await axios.get(
+        `http://www.hongsick.com/api/auth/me/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access}`,
+          },
+        }
+      );
+    } catch (e) {
+      if (e.response.status === 401) {
+        console.log("401");
+        const currentRefresh = window.localStorage.getItem("refresh_token");
+
+        //try {
+        const resp = await axios.post(
+          `http://www.hongsick.com/api/auth/refresh-tokens`,
+          { refreshToken: currentRefresh }
+        );
+        console.log("재요청");
+        const access = resp.data.access.token;
+        const refresh = resp.data.refresh.token;
+        window.localStorage.setItem("access_token", access);
+        window.localStorage.setItem("refresh_token", refresh);
+        /*const response = await axios.get(
+            `http://www.hongsick.com/api/auth/me/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${access}`,
+              },
+            }
+          );
+        } catch (error) {
+          window.localStorage.removeItem("access_token");
+          window.localStorage.removeItem("refresh_token");
+          window.localStorage.removeItem("id");
+          dispatch(allActions.loginActions.logOutUser());
+          alert("로그인 해주세요");
+        }*/
+      }
+    }
+  };
+  handleValideToken();
+  console.log(loginInfo);
   return (
     <>
       <SVisibility className="Vcontainer" onUpdate={handleUpdate}>
@@ -204,7 +242,11 @@ export default withRouter(({ location: { pathname } }) => {
                 <Menu status={pathname === "/about"}>About</Menu>
               </STLink>
               {loginInfo ? (
-                <Menu onClick={handleLogout}>{loginInfo.profile.nickname}</Menu>
+                //<Menu onClick={handleLogout}>{loginInfo.profile.nickname}</Menu>
+                <UserDropdown
+                  id={loginInfo.id}
+                  nickname={loginInfo.profile.nickname}
+                />
               ) : (
                 <Menu
                   onClick={() => dispatch(allActions.modalActions.openModal())}
@@ -237,7 +279,10 @@ export default withRouter(({ location: { pathname } }) => {
               <Menu status={pathname === "/about"}>About</Menu>
             </STLink>
             {loginInfo ? (
-              <Menu onClick={handleLogout}>{loginInfo.profile.nickname}</Menu>
+              <UserDropdown
+                id={loginInfo.id}
+                nickname={loginInfo.profile.nickname}
+              />
             ) : (
               <Menu
                 onClick={() => dispatch(allActions.modalActions.openModal())}

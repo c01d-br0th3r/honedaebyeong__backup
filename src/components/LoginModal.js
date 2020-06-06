@@ -160,6 +160,7 @@ const LoginModal = () => {
   };
   useEffect(() => {
     if (data !== null) {
+      console.log(data);
       const access = data.data.tokens.access.token;
       const refresh = data.data.tokens.refresh.token;
       const user = data.data.user;
@@ -170,6 +171,7 @@ const LoginModal = () => {
       dispatch(allActions.loginActions.loginUserSuccess(user));
     }
   }, [data]);
+
   return (
     <>
       <Modal.Header>홍대병 로그인</Modal.Header>
