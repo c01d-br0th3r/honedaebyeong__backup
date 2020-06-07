@@ -8,9 +8,12 @@ const apis = {
       },
     }),
   refreshToken: (refresh) =>
-    axios.get(`http://www.hongsick.com/api/auth/refresh-tokens`, {
+    axios.post(`http://www.hongsick.com/api/auth/refresh-tokens`, {
       refreshToken: refresh,
     }),
+  login: (info) => axios.post("http://www.hongsick.com/api/auth/login", info),
+  register: (data) =>
+    axios.post("http://www.hongsick.com/api/auth/register", data),
 };
 
 export default apis;

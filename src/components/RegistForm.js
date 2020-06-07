@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Input, Checkbox, Button } from "semantic-ui-react";
 import styled from "styled-components";
-import axios from "axios";
 import Header from "../components/Header";
 import Privacy from "./privacy";
-import Shake from "react-reveal/Shake";
+import apis from "../api";
 
 const Wrap = styled.div`
   clear: both;
@@ -109,10 +108,11 @@ const RegistForm = () => {
       passwordConfirmation: passwordChk,
     };
     try {
-      const regi = await axios.post(
+      /*const regi = await axios.post(
         "http://www.hongsick.com/api/auth/register",
         data
-      );
+      );*/
+      const regi = await apis.register(data);
       console.log(regi);
       setResp(regi);
     } catch (e) {

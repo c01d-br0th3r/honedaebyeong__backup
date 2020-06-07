@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Placeholder } from "semantic-ui-react";
 import styled from "styled-components";
 import axios from "axios";
 import Cards from "../components/Cards";

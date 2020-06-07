@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import allActinos from "../store/actions";
-import axios from "axios";
 import allActions from "../store/actions";
+import apis from "../api";
 
 const Container = styled.div`
   display: flex;
@@ -142,10 +142,11 @@ const LoginModal = () => {
       setDisabled("disabled");
       const info = { email: id, password: pw };
       try {
-        const resp = await axios.post(
+        /*const resp = await axios.post(
           "http://www.hongsick.com/api/auth/login",
           info
-        );
+        );*/
+        const resp = await apis.login(info);
         setLoading(false);
         setDisabled("");
         setData(resp);

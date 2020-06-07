@@ -23,7 +23,7 @@ const UserDropdown = ({ id, nickname }) => {
     dispatch(allActions.loginActions.logOutUser());
   };
   return (
-    <SDropdown text={<Icon name="user" />} icon={""}>
+    <SDropdown text="My Info">
       <Dropdown.Menu>
         <Link to={`user/${id}`}>
           <Dropdown.Item text={`#${nickname}`} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Header from "../components/Header";
 
 const UserInfo = (props) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -35,6 +36,7 @@ const UserInfo = (props) => {
   }, []);
   return (
     <div>
+      <Header />
       {loading ? (
         <div>Loading...</div>
       ) : (
