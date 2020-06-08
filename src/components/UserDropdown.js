@@ -1,9 +1,10 @@
 import React from "react";
-import { Dropdown, Icon } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import allActions from "../store/actions";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "./UserDropdown.css";
 
 const SDropdown = styled(Dropdown)`
   &&& {
